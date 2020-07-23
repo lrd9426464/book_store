@@ -69,7 +69,7 @@
             <img src="../assets/footer/main.png" alt="" slot="icon">
             主页
          </mt-tab-item>
-         <mt-tab-item id="shopping" @click.native="shopping">
+         <mt-tab-item id="shopping" @click.native="toshopping">
             <img src="../assets/footer/shopping.png" alt="" slot="icon">
             购物车
          </mt-tab-item>
@@ -95,17 +95,27 @@ export default {
          window.localStorage.setItem("visited","main");
          this.$store.commit("update_visited");
       },
-      shopping(){
+      toshopping(){
          window.localStorage.setItem("visited","shopping");
          this.$store.commit("update_visited");
-         this.$router.push("/shopping");
+         this.$router.push(`/shopping`);
+      },
+      shopping(){
+         let shoppingItem={};
+         shoppingItem.title=this.title;
+         shoppingItem.price=this.price;
+         window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
+         this.$store.commit("add_commodity");
+         window.localStorage.setItem("visited","shopping");
+         this.$store.commit("update_visited");
+         this.$router.push(`/shopping`);
       }
    },
    mounted(){
       this.axios.get(`/detail?did=${this.did}`).then(result=>{
          let data=result.data[0];
          this.msg=data;
-         console.log(data)
+         // console.log(data)
       })
    }
 }

@@ -92,7 +92,7 @@ export default {
       }
       this.busy=true;
       this.$indicator.open({
-        text:"跳转中...",
+        text:"加载中...",
         spineerType:"fading-circle"
       }),
       setTimeout(() => {
