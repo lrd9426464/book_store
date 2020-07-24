@@ -5,11 +5,11 @@
       <div id="order_head">
          <span>目前有</span>
          <mt-badge class="badge" size="small" color="transparent">{{sum}}</mt-badge>
-         <span v-if="this.sum==1">种商品</span>
+         <span v-if="this.sum==1 || this.sum==0">种商品</span>
          <span v-else>种不同种类的商品</span>
       </div>
       <div id="content">
-         <div id="order_content" v-for="(item,i) in commodity" :key="i">
+         <div id="order_content" v-for="(item,i) in $store.state.shoppingCar" :key="i">
             <div id="order_msg">
                <div>
                   <input type="checkbox" @click="oneSelect">
@@ -18,18 +18,18 @@
                   <img src="http://view.jqueryfuns.com/2020/6/17/389352992b566007a4a27e492e992458/images/book.jpg" alt="">
                   <div>
                      <p>{{item.title}}</p>
-                     <mt-button :data-num="i" @click.native="minus" size="small">-</mt-button>
-                        <span>1</span>
-                     <mt-button :data-num="i" @click.native="add" size="small">+</mt-button>
+                     <mt-button :data-num="num" @click.native="minus" size="small">-</mt-button>
+                        <span >{{item.count}}</span>
+                     <mt-button :data-num="num" @click.native="add" size="small">+</mt-button>
                   </div>
                </div>
             </div>
             <div id="order_price">
                <div>
                   <img src="../assets/shopping/del.png" alt="">
-                  <span :data-num="i" @click="del">删除</span>
+                  <span :data-num="num" @click="del">删除</span>
                </div>
-               <div class="aaa">订单总价：¥<span :id="`total`+i">{{item.price}}</span></div>
+               <div class="aaa">订单总价：¥<span>{{item.price*item.count}}</span></div>
             </div>
          </div>
          <div id="nothing" v-show="isNothing">
@@ -57,20 +57,29 @@ export default {
          sum:0,
          num:0,
          isNothing:false,
-         commodity:[],
+         // commodity:[],
          allPrice:0
       }
    },
    methods:{
       minus(e){
+         // let num=e.target.dataset.num;
          let num=e.target.dataset.num;
-         let total=document.getElementById(`total${num}`);
+         // console.log(this.$store.state.shoppingCar[num1].count)
+         // let span=document.getElementById(num);
+         // let total=document.getElementById(`total${num}`);
+         // console.log(span)
          // console.log(num)
-         let count=e.target.nextElementSibling.innerHTML
+         // let count=e.target.nextElementSibling.innerHTML
          // console.log(count)
-         if(count>1){
-            e.target.nextElementSibling.innerHTML--;
-            total.innerHTML=e.target.nextElementSibling.innerHTML*this.commodity[num].price;
+         if(this.$store.state.shoppingCar[num].count>1){
+            this.$store.commit("minus_count",num);
+            // span.innerHTML--
+            // window.localStorage.setItem(`count${num}`,span.innerHTML);
+            // console.log(window.localStorage.getItem(`count${num}`))
+            // e.target.nextElementSibling.innerHTML=window.localStorage.getItem(`count${num}`);
+            // window.localStorage.setItem(`price${num}`,e.target.nextElementSibling.innerHTML*this.commodity[num1].price);
+            // total.innerHTML=window.localStorage.getItem(`price${num}`);
             // this.allPrice-=Number(this.commodity[e.target.dataset.num].price);
             // this.commodity[num].n=e.target.nextElementSibling.innerHTML;
             // this.aa=this.commodity;
@@ -78,20 +87,24 @@ export default {
          }
       },
       add(e){
+         // let num=e.target.dataset.num;
          let num=e.target.dataset.num;
-         let total=document.getElementById(`total${num}`);
-         e.target.previousElementSibling.innerHTML++;
-         total.innerHTML=e.target.previousElementSibling.innerHTML*this.commodity[num].price;
+         this.$store.commit("add_count",num);
+         // let span=document.getElementById(num);
+         // console.log(span)
+         // let total=document.getElementById(`total${num}`);
+         // span.innerHTML++;
+         // total.innerHTML=e.target.previousElementSibling.innerHTML*this.commodity[num1].price;
+         // window.localStorage.setItem(`price${num}`,total.innerHTML);
+         // window.localStorage.setItem(`count${num}`,span.innerHTML);
          // this.allPrice+=Number(this.commodity[e.target.dataset.num].price);
       },
       del(e){
-         let j=e.target.dataset.num;
-         console.log(this.commodity)
+         let num=e.target.dataset.num;
          // let delprice=document.getElementById(`total${e.target.dataset.num}`).innerHTML
-         this.$store.commit("del_commodity",e.target.dataset.num)
-         this.commodity=JSON.parse(window.localStorage.getItem("commodityList"));
-         this.sum=this.commodity.length;
-         if(this.commodity.length==0){
+         this.$store.commit("del_commodity",num);
+         this.sum=this.$store.state.shoppingCar.length;
+         if(this.$store.state.shoppingCar.length==0){
             this.isNothing=true;
             let p1=document.getElementById("p1");
             p1.checked=false;
@@ -100,7 +113,7 @@ export default {
       },
       allSelect(){
          let span=document.querySelectorAll(".aaa span");
-         console.log(span)
+         // console.log(span)
          let inputs=document.querySelectorAll("#content input");
          let p1=document.getElementById("p1");
          if(p1.checked==true){
@@ -143,10 +156,11 @@ export default {
    },
    mounted(){
       this.commodity=JSON.parse(window.localStorage.getItem("commodityList"));
-      if(this.commodity==null){
+      // console.log(this.commodity)
+      if(this.$store.state.shoppingCar==null){
          this.num=0;
       }else{
-         this.sum=this.commodity.length;
+         this.sum=this.$store.state.shoppingCar.length;
       }
       // console.log(this.sum)
       if(this.sum==0){

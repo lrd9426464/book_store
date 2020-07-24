@@ -9,7 +9,7 @@ export default new Vuex.Store({
       islogin:localStorage.getItem("login_state")?localStorage.getItem("login_state"):false,
       whichOne:1,
       visited:localStorage.getItem("visited"),
-      shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==[]?[]:JSON.parse(window.localStorage.getItem("commodityList"))
+      shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList"))
    },
    //用来操作state中的数据
    mutations: {
@@ -33,7 +33,18 @@ export default new Vuex.Store({
       del_commodity:(state,n)=>{
          state.shoppingCar.splice(n,1);
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
-      }
+      },
+      add_count:(state,n)=>{
+         state.shoppingCar[n].count++;
+         window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
+      },
+      minus_count:(state,n)=>{
+         state.shoppingCar[n].count--;
+         window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
+      },
+      // total:(state)=>{
+
+      // }
    },
    actions: {
 

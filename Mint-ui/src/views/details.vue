@@ -104,12 +104,42 @@ export default {
          let shoppingItem={};
          shoppingItem.title=this.title;
          shoppingItem.price=this.price;
-         window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
-         this.$store.commit("add_commodity");
+         shoppingItem.did=this.did;
+         shoppingItem.count=1;
+         shoppingItem.total=this.price;
+         if(JSON.parse(window.localStorage.getItem("commodityList"))==null || JSON.parse(window.localStorage.getItem("commodityList"))==[]){
+            window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
+            this.$store.commit("add_commodity");
+         }else{
+            let sub=JSON.parse(window.localStorage.getItem("commodityList"));
+            let result=sub.every((elem,i,arr)=>{
+               // console.log(elem.did)
+               return elem.did==this.did
+            })
+            // console.log(result)
+            if(result==false){
+               console.log("1")
+               window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
+               this.$store.commit("add_commodity");
+            }else{
+               console.log("2")
+            }
+            // console.log(sub)
+            // for (let index = 0; index < sub.length; index++) {
+            //    if(sub[index].did!==this.did){
+            //       window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
+            //       this.$store.commit("add_commodity");
+            //    }else{
+            //       Toast('提示信息');
+            //    }
+            // }
+         }
+         // console.log(JSON.parse(window.localStorage.getItem("subject")))
          window.localStorage.setItem("visited","shopping");
          this.$store.commit("update_visited");
          this.$router.push(`/shopping`);
-      }
+      },
+      
    },
    mounted(){
       this.axios.get(`/detail?did=${this.did}`).then(result=>{
