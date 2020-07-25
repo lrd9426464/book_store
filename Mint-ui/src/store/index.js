@@ -42,9 +42,14 @@ export default new Vuex.Store({
          state.shoppingCar[m].count--;
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
       },
-      // total:(state)=>{
-
-      // }
+      checked:(state,i)=>{
+         state.shoppingCar[i].selected=1;
+         window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
+      },
+      nochecked:(state,r)=>{
+         state.shoppingCar[r].selected=0;
+         window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
+      }
    },
    actions: {
 

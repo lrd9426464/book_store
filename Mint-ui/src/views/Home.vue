@@ -136,10 +136,14 @@ export default {
     display: flex;
   }
   #content>ul {
-    /* position: fixed; */
     width: 35%;
     list-style: none;
     font-size: 15px;
+    overflow: scroll;
+    position: fixed;
+    left: 0;
+    top: 40px;
+    bottom: 60px;
   }
   #content > ul > li{
     background-color: #f3f4f6;
@@ -153,7 +157,11 @@ export default {
   #content #list{
     font-size: 15px;
     width:60%;
-    margin-left: 20px;
+    position: fixed;
+    right: 10px;
+    top: 40px;
+    bottom: 60px;
+    overflow: scroll;
   }
   #content #list-header{
     line-height: 45px;

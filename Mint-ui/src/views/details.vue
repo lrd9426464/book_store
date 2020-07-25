@@ -107,6 +107,7 @@ export default {
          shoppingItem.did=this.did;
          shoppingItem.count=1;
          shoppingItem.total=this.price;
+         shoppingItem.selected=0;
          if(JSON.parse(window.localStorage.getItem("commodityList"))==null || JSON.parse(window.localStorage.getItem("commodityList")).length==0){
             window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
             this.$store.commit("add_commodity");

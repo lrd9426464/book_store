@@ -58,7 +58,7 @@ export default {
          num:0,
          isNothing:false,
          // commodity:[],
-         allPrice:0
+         // allPrice:0
       }
    },
    methods:{
@@ -101,37 +101,41 @@ export default {
       },
       del(e){
          let num=e.target.dataset.num;
-         // let delprice=document.getElementById(`total${e.target.dataset.num}`).innerHTML
-         this.$store.commit("del_commodity",num);
+         let inputs=document.querySelectorAll("#content input");
+         let p1=document.getElementById("p1");
          this.sum=this.$store.state.shoppingCar.length;
+         inputs.forEach((elem,i)=>{
+            elem.checked=false;
+            console.log(i)
+            this.$store.commit("nochecked",i);
+            p1.checked=false;
+         })
          if(this.$store.state.shoppingCar.length==0){
             this.isNothing=true;
-            let p1=document.getElementById("p1");
             p1.checked=false;
             // this.allPrice-=Number(delprice);
          }
+         this.$store.commit("del_commodity",num);
       },
       allSelect(){
-         let span=document.querySelectorAll(".aaa span");
+         // let span=document.querySelectorAll(".aaa span");
          // console.log(span)
          let inputs=document.querySelectorAll("#content input");
          let p1=document.getElementById("p1");
          if(p1.checked==true){
-            span.forEach(elem=>{
-               this.allPrice+=Number(elem.innerHTML);
+            inputs.forEach((elem,i)=>{
+               if(elem.checked!=true){
+                  elem.checked=true;
+                  this.$store.commit("checked",i);
+               }
             })
             this.num=inputs.length;
-            inputs.forEach(element => {
-               if(element.checked!=true){
-                  element.checked=true;
-               }
-            });
          }else{
-            this.allPrice=0;
             this.num=0;
-            inputs.forEach(element => {
+            inputs.forEach((element,i) => {
                if(element.checked==true){
                   element.checked=false;
+                  this.$store.commit("nochecked",i);
                }
             });
          }
@@ -140,14 +144,18 @@ export default {
          let input=document.querySelectorAll("#content input");
          let p1=document.getElementById("p1")
          let arr=[];
-         input.forEach(elem=>{
-            if(elem.checked!==true){
+         input.forEach((elem,i)=>{
+            if(elem.checked==true){
+               // console.log(i)
+               this.$store.commit("checked",i);
                arr.push(elem);
+            }else{
+               this.$store.commit("nochecked",i);
             }
          })
          // console.log(arr.length);
-         this.num=input.length-arr.length;
-         if(arr.length==0){
+         this.num=arr.length;
+         if(arr.length==input.length){
             p1.checked=true;
          }else{
             p1.checked=false;
@@ -155,16 +163,47 @@ export default {
       }
    },
    mounted(){
-      this.commodity=JSON.parse(window.localStorage.getItem("commodityList"));
+      // this.commodity=JSON.parse(window.localStorage.getItem("commodityList"));
       // console.log(this.commodity)
       if(this.$store.state.shoppingCar==null){
          this.num=0;
       }else{
+         let n=0;
+         let input=document.querySelectorAll("#content input");
+         let p1=document.getElementById("p1")
          this.sum=this.$store.state.shoppingCar.length;
+         if(this.$store.state.shoppingCar.length!==0){
+            this.$store.state.shoppingCar.forEach((elem,i)=>{
+               if(elem.selected==1){
+                  n++;
+                  input[i].checked=true;
+               }
+            })
+         }
+         
+         if(n==input.length && n!==0){
+            p1.checked=true;
+         }else{
+            p1.checked=false;
+         }
       }
       // console.log(this.sum)
       if(this.sum==0){
          this.isNothing=true;
+      }
+   },
+   computed:{
+      allPrice(){
+         console.log("123");
+         let num=0;
+         if(this.$store.state.shoppingCar!=0){
+            this.$store.state.shoppingCar.forEach(elem=>{
+               if(elem.selected==1){
+                  num+=Number(elem.count)*Number(elem.price);
+               }
+            })
+         }
+         return num;
       }
    }
 }
