@@ -45,7 +45,8 @@ export default {
       anotherName:"石油",
       page:1,
       busy:false,
-      isshow:false
+      isshow:false,
+      pages:1
     }
   },
   methods:{
@@ -62,11 +63,10 @@ export default {
       // console.log(this.book_list);
     },
     select(n){
-      // this.book_msg=[];
       this.axios.get(`/article?cid=${n}&page=${this.page}`).then(result=>{
         let data=result.data.results;
-        let num=result.data.num;
-        this.num=num;
+        let pages=result.data.num;
+        this.pages=pages;
         // console.log(this.num)
         data.forEach(elem=>{
           if(elem.image!=null){
@@ -86,7 +86,7 @@ export default {
     },
     loadMore(){
       this.page++;
-      if(this.num<this.page){
+      if(this.pages<this.page){
         this.isshow=true;
         return ;
       }
@@ -111,6 +111,7 @@ export default {
   },
   watch:{
     num(){
+      this.isshow=false;
       this.page=1;
       this.book_msg=[];
       this.select(this.$store.state.whichOne)

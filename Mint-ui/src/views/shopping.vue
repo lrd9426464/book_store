@@ -103,10 +103,9 @@ export default {
          let num=e.target.dataset.num;
          let inputs=document.querySelectorAll("#content input");
          let p1=document.getElementById("p1");
-         this.sum=this.$store.state.shoppingCar.length;
          inputs.forEach((elem,i)=>{
             elem.checked=false;
-            console.log(i)
+            // console.log(i)
             this.$store.commit("nochecked",i);
             p1.checked=false;
          })
@@ -116,6 +115,8 @@ export default {
             // this.allPrice-=Number(delprice);
          }
          this.$store.commit("del_commodity",num);
+         this.sum=this.$store.state.shoppingCar.length;
+         this.num=0;
       },
       allSelect(){
          // let span=document.querySelectorAll(".aaa span");
@@ -194,7 +195,7 @@ export default {
    },
    computed:{
       allPrice(){
-         console.log("123");
+         // console.log("123");
          let num=0;
          if(this.$store.state.shoppingCar!=0){
             this.$store.state.shoppingCar.forEach(elem=>{

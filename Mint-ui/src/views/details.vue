@@ -127,9 +127,9 @@ export default {
             }
          }
          // console.log(JSON.parse(window.localStorage.getItem("subject")))
-         window.localStorage.setItem("visited","shopping");
-         this.$store.commit("update_visited");
-         this.$router.push(`/shopping`);
+         // window.localStorage.setItem("visited","shopping");
+         // this.$store.commit("update_visited");
+         // this.$router.push(`/shopping`);
       },
       
    },
