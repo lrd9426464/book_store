@@ -107,32 +107,23 @@ export default {
          shoppingItem.did=this.did;
          shoppingItem.count=1;
          shoppingItem.total=this.price;
-         if(JSON.parse(window.localStorage.getItem("commodityList"))==null || JSON.parse(window.localStorage.getItem("commodityList"))==[]){
+         if(JSON.parse(window.localStorage.getItem("commodityList"))==null || JSON.parse(window.localStorage.getItem("commodityList")).length==0){
             window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
             this.$store.commit("add_commodity");
          }else{
             let sub=JSON.parse(window.localStorage.getItem("commodityList"));
             let result=sub.every((elem,i,arr)=>{
                // console.log(elem.did)
-               return elem.did==this.did
+               return elem.did!==this.did
             })
             // console.log(result)
             if(result==false){
-               console.log("1")
+               this.$toast('您的购物车里已有该商品');
+               return ;
+            }else{
                window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
                this.$store.commit("add_commodity");
-            }else{
-               console.log("2")
             }
-            // console.log(sub)
-            // for (let index = 0; index < sub.length; index++) {
-            //    if(sub[index].did!==this.did){
-            //       window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
-            //       this.$store.commit("add_commodity");
-            //    }else{
-            //       Toast('提示信息');
-            //    }
-            // }
          }
          // console.log(JSON.parse(window.localStorage.getItem("subject")))
          window.localStorage.setItem("visited","shopping");

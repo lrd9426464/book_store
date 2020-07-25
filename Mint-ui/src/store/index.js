@@ -38,8 +38,8 @@ export default new Vuex.Store({
          state.shoppingCar[n].count++;
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
       },
-      minus_count:(state,n)=>{
-         state.shoppingCar[n].count--;
+      minus_count:(state,m)=>{
+         state.shoppingCar[m].count--;
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
       },
       // total:(state)=>{

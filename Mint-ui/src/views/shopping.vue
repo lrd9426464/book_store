@@ -18,16 +18,16 @@
                   <img src="http://view.jqueryfuns.com/2020/6/17/389352992b566007a4a27e492e992458/images/book.jpg" alt="">
                   <div>
                      <p>{{item.title}}</p>
-                     <mt-button :data-num="num" @click.native="minus" size="small">-</mt-button>
+                     <mt-button :data-num="i" @click.native="minus" size="small">-</mt-button>
                         <span >{{item.count}}</span>
-                     <mt-button :data-num="num" @click.native="add" size="small">+</mt-button>
+                     <mt-button :data-num="i" @click.native="add" size="small">+</mt-button>
                   </div>
                </div>
             </div>
             <div id="order_price">
                <div>
                   <img src="../assets/shopping/del.png" alt="">
-                  <span :data-num="num" @click="del">删除</span>
+                  <span :data-num="i" @click="del">删除</span>
                </div>
                <div class="aaa">订单总价：¥<span>{{item.price*item.count}}</span></div>
             </div>
@@ -166,21 +166,7 @@ export default {
       if(this.sum==0){
          this.isNothing=true;
       }
-   },
-   // computed:{
-   //    allPrice(){
-   //       console.log("123")
-   //       let i=0;
-   //       let span=document.querySelectorAll("#div span");
-   //       console.log(span)
-   //       for(let elem of span){
-   //          console.log(elem.innerHTML)
-            // i+=Number(elem.innerHTML);
-            // console.log(i)
-   //       }
-   //       return i;
-   //    }
-   // }
+   }
 }
 </script>
 
