@@ -70,7 +70,8 @@ export default {
         // console.log(this.num)
         data.forEach(elem=>{
           if(elem.image!=null){
-            elem.image=require(`../assets/${elem.image}`)
+            // elem.img=elem.image;
+            elem.image=require(`../assets/${elem.image}`);
           }
           this.book_msg.push(elem);
         })
@@ -81,7 +82,7 @@ export default {
         // console.log(li[j]);
       });
     },
-    info(i,t,p){
+    info(i,t,p,image){
       this.$router.push(`/details/${i}&${t}&${p}`)
     },
     loadMore(){

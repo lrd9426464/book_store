@@ -44,6 +44,9 @@
       </li>
     </ul>
     <div id="check">
+      <mt-cell title="管理收货地址" is-link to="/address">
+        <img slot="icon" src="../assets/me/address.png" />
+      </mt-cell>
       <mt-cell title="用户协议" is-link>
         <img slot="icon" src="../assets/me/user.png" />
       </mt-cell>
@@ -53,8 +56,6 @@
       <mt-cell title="联系客服" is-link>
         <img slot="icon" src="../assets/me/kefu.png" />
       </mt-cell>
-    </div>
-    <div id="about">
       <mt-cell title="关于我们" is-link>
         <img slot="icon" src="../assets/me/about-us.png" />
       </mt-cell>
@@ -143,7 +144,6 @@ export default {
 .Me ul p{
    margin-top: 6px;
 }
-.Me ul .Me #about,
 .Me #check {
   margin-top: 10px;
 }

@@ -28,17 +28,17 @@ export default {
    },
    methods:{
       me(){
-         window.localStorage.setItem("visited","me");
+         window.sessionStorage.setItem("visited","me");
          this.$store.commit("update_visited");
          this.$router.push("/me");
       },
       shopping(){
-         window.localStorage.setItem("visited","shopping");
+         window.sessionStorage.setItem("visited","shopping");
          this.$store.commit("update_visited");
          this.$router.push("/shopping");
       },
       main(){
-         window.localStorage.setItem("visited","main");
+         window.sessionStorage.setItem("visited","main");
          this.$store.commit("update_visited");
          this.$router.push("/");
       }

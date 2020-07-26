@@ -6,10 +6,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
    //存储应用程序中共享的数据
    state: {
-      islogin:localStorage.getItem("login_state")?localStorage.getItem("login_state"):false,
+      islogin:sessionStorage.getItem("login_state")?sessionStorage.getItem("login_state"):false,
       whichOne:1,
-      visited:localStorage.getItem("visited"),
-      shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList"))
+      visited:"main",
+      shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList")),
+      address_list:JSON.parse(window.localStorage.getItem("address"))==null?[]:JSON.parse(window.localStorage.getItem("address")),
    },
    //用来操作state中的数据
    mutations: {
@@ -24,7 +25,7 @@ export default new Vuex.Store({
          state.whichOne=localStorage.getItem("whichOne");
       },
       update_visited:(state)=>{
-         state.visited=localStorage.getItem("visited");
+         state.visited=sessionStorage.getItem("visited");
       },
       add_commodity:(state)=>{
          state.shoppingCar.push(JSON.parse(window.localStorage.getItem("subject")));
@@ -49,7 +50,11 @@ export default new Vuex.Store({
       nochecked:(state,r)=>{
          state.shoppingCar[r].selected=0;
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
-      }
+      },
+      add_address:(state)=>{
+         state.address_list.push(JSON.parse(window.localStorage.getItem("add_address")));
+         window.localStorage.setItem("address",JSON.stringify(state.address_list))
+      },
    },
    actions: {
 

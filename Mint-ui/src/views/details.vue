@@ -92,11 +92,11 @@ export default {
    methods:{
       main(){
          this.$router.push("/");
-         window.localStorage.setItem("visited","main");
+         window.sessionStorage.setItem("visited","main");
          this.$store.commit("update_visited");
       },
       toshopping(){
-         window.localStorage.setItem("visited","shopping");
+         window.sessionStorage.setItem("visited","shopping");
          this.$store.commit("update_visited");
          this.$router.push(`/shopping`);
       },
@@ -134,6 +134,7 @@ export default {
       
    },
    mounted(){
+      console.log(this.image)
       this.axios.get(`/detail?did=${this.did}`).then(result=>{
          let data=result.data[0];
          this.msg=data;

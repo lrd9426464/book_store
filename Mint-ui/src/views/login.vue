@@ -83,7 +83,7 @@ export default {
     },
     login() {
       if (this.uname_state == "success" && this.upwd_state == "success") {
-        localStorage.setItem("login_state", true);
+        sessionStorage.setItem("login_state", true);
         this.$store.commit("is_login");
         this.$router.push("/me")
       } else {

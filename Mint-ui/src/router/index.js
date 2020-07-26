@@ -7,11 +7,21 @@ import login from '../views/login.vue'
 import shopping from '../views/shopping.vue'
 import Me from '../views/Me.vue'
 import details from '../views/details.vue'
+import address from '../views/address.vue'
+import edit from '../views/edit_address.vue'
 
 Vue.use(VueRouter)
 
 
 const routes = [
+  {
+    path: '/editAddress',
+    component: edit,
+  },
+  {
+    path: '/address',
+    component: address
+  },
   {
     path: '/details/:did&:title&:price',
     component: details,
