@@ -48,6 +48,7 @@ export default {
       let add_address = {};
       let n=0;
       add_address.username = this.username;
+      console.log(this.username)
       add_address.phone = this.phone;
       add_address.address = this.address;
       add_address.address_label = this.address_label;
@@ -58,18 +59,27 @@ export default {
          }
       }
       if(n==0){
-         window.localStorage.setItem("add_address",JSON.stringify(add_address));
-         this.$store.commit("add_address");
-         this.$router.push("/address")
+        if(window.sessionStorage.getItem("change")!==null){
+          let m=JSON.parse(window.sessionStorage.getItem("change")).num;
+          add_address.num=m;
+          this.$store.commit("update_address",add_address);
+        }else{
+            window.localStorage.setItem("add_address",JSON.stringify(add_address));
+            this.$store.commit("add_address");
+        }
+        this.$router.push("/address");
       }
     }
   },
   mounted(){
       //  console.log("1313213")
-       this.username=JSON.parse(window.sessionStorage.getItem("change")).username;
-       this.phone=JSON.parse(window.sessionStorage.getItem("change")).phone;
-       this.address=JSON.parse(window.sessionStorage.getItem("change")).address;
-       this.address_label=JSON.parse(window.sessionStorage.getItem("change")).address_label;
+      if(window.sessionStorage.getItem("change")!==null){
+        this.username=JSON.parse(window.sessionStorage.getItem("change")).username;
+        this.phone=JSON.parse(window.sessionStorage.getItem("change")).phone;
+        this.address=JSON.parse(window.sessionStorage.getItem("change")).address;
+        this.address_label=JSON.parse(window.sessionStorage.getItem("change")).address_label;
+      }
+       
    }
 };
 </script>

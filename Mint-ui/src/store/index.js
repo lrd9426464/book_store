@@ -55,6 +55,15 @@ export default new Vuex.Store({
          state.address_list.push(JSON.parse(window.localStorage.getItem("add_address")));
          window.localStorage.setItem("address",JSON.stringify(state.address_list))
       },
+      update_address:(state,update)=>{
+         state.address_list[update.num]=update;
+         console.log(state.address_list);
+         window.localStorage.setItem("address",JSON.stringify(state.address_list))
+      },
+      del_address:(state,n)=>{
+         state.address_list.splice(n,1);
+         window.localStorage.setItem("address",JSON.stringify(state.address_list))
+      },
    },
    actions: {
 

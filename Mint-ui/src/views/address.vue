@@ -15,6 +15,7 @@
           <p>{{elem.address}}</p>
         </div>
         <div id="address_edit">
+            <router-link @click.native="del" :data-num="i" to>删除</router-link>
             <span>|</span>
             <router-link @click.native="changeOne" :data-num="i" to>编辑</router-link>
         </div>
@@ -38,13 +39,20 @@ export default {
    methods:{
       changeOne(e){
          let i=e.target.dataset.num;
-         // console.log(this.$store.state.address_list[i]);
+         this.$store.state.address_list[i].num=i;
+        //  console.log(this.$store.state.address_list[i]);
          window.sessionStorage.setItem("change",JSON.stringify(this.$store.state.address_list[i]))
          this.$router.push("/editAddress");
       },
       editOne(){
          window.sessionStorage.clear();
          this.$router.push("/editAddress");
+      },
+      del(e){
+         let num=e.target.dataset.num;
+         this.$store.commit("del_address",num);
+         this.sum=this.$store.state.shoppingCar.length;
+         this.num=0;
       }
    }
 
@@ -83,7 +91,7 @@ export default {
    margin: 10px 0;
 }
 .address #address_edit{
-   flex: 1;
+   flex: 2;
    text-align: center;
    align-self: center;
 }
