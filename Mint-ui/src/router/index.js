@@ -9,11 +9,16 @@ import Me from '../views/Me.vue'
 import details from '../views/details.vue'
 import address from '../views/address.vue'
 import edit from '../views/edit_address.vue'
+import pay from '../views/pay.vue'
 
 Vue.use(VueRouter)
 
 
 const routes = [
+  {
+    path: '/pay',
+    component: pay,
+  },
   {
     path: '/editAddress',
     component: edit,
