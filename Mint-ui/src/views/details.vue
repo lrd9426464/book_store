@@ -134,7 +134,7 @@ export default {
       
    },
    mounted(){
-      console.log(this.image)
+      // console.log(this.image)
       this.axios.get(`/detail?did=${this.did}`).then(result=>{
          let data=result.data[0];
          this.msg=data;

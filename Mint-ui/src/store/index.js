@@ -8,7 +8,7 @@ export default new Vuex.Store({
    state: {
       islogin:sessionStorage.getItem("login_state")?sessionStorage.getItem("login_state"):false,
       whichOne:1,
-      visited:"main",
+      visited:window.sessionStorage.getItem("visited"),
       shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList")),
       address_list:JSON.parse(window.localStorage.getItem("address"))==null?[]:JSON.parse(window.localStorage.getItem("address")),
    },

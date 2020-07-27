@@ -6,7 +6,7 @@
       </router-link>
     </mt-header>
     <mt-field label="姓名" placeholder="收货人" v-model="username"></mt-field>
-    <mt-field label="手机号" placeholder="手机号码" type="tel" v-model="phone"></mt-field>
+    <mt-field label="手机号" placeholder="手机号码" type="tel" v-model="phone" :attr="{maxlength:'11'}"></mt-field>
     <mt-field label="地址" placeholder="详细地址：如省，市，县，道路，门牌号，小区，楼栋等" type="textarea" v-model="address"></mt-field>
     <mt-cell title="地址标签" is-link @click.native="choose_popup">{{address_label}}</mt-cell>
     <mt-popup id="popup" position="bottom" v-model="popupVisible">

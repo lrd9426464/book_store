@@ -85,10 +85,10 @@ export default {
 }
 .address #address_content p:first-child span:last-child{
    position: absolute;
-   left: 35%;
+   left: 25%;
 }
 .address #address_content p{
-   margin: 10px 0;
+   margin: 15px 0;
 }
 .address #address_edit{
    flex: 2;
