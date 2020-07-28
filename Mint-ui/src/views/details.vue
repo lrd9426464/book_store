@@ -93,11 +93,11 @@ export default {
       main(){
          this.$router.push("/");
          window.sessionStorage.setItem("visited","main");
-         this.$store.commit("update_visited");
+         // this.$store.commit("update_visited");
       },
       toshopping(){
          window.sessionStorage.setItem("visited","shopping");
-         this.$store.commit("update_visited");
+         // this.$store.commit("update_visited");
          this.$router.push(`/shopping`);
       },
       shopping(){

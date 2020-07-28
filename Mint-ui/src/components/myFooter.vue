@@ -23,23 +23,23 @@
 export default {
    data(){
       return {
-         visited:this.$store.state.visited
+         visited:window.sessionStorage.getItem("visited")
       }
    },
    methods:{
       me(){
          window.sessionStorage.setItem("visited","me");
-         this.$store.commit("update_visited");
+         // this.$store.commit("update_visited");
          this.$router.push("/me");
       },
       shopping(){
          window.sessionStorage.setItem("visited","shopping");
-         this.$store.commit("update_visited");
+         // this.$store.commit("update_visited");
          this.$router.push("/shopping");
       },
       main(){
          window.sessionStorage.setItem("visited","main");
-         this.$store.commit("update_visited");
+         // this.$store.commit("update_visited");
          this.$router.push("/");
       }
    }

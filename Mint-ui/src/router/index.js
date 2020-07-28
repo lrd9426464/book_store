@@ -10,11 +10,21 @@ import details from '../views/details.vue'
 import address from '../views/address.vue'
 import edit from '../views/edit_address.vue'
 import pay from '../views/pay.vue'
+import payMethod from '../views/payMethod.vue'
+import paySuccess from '../views/paySuccess.vue'
 
 Vue.use(VueRouter)
 
 
 const routes = [
+  {
+    path: '/paySuccess',
+    component: paySuccess,
+  },
+  {
+    path: '/payMethod',
+    component: payMethod,
+  },
   {
     path: '/pay',
     component: pay,

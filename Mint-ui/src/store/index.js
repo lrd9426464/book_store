@@ -8,7 +8,7 @@ export default new Vuex.Store({
    state: {
       islogin:sessionStorage.getItem("login_state")?sessionStorage.getItem("login_state"):false,
       whichOne:1,
-      visited:window.sessionStorage.getItem("visited"),
+      // visited:window.sessionStorage.getItem("visited")==null?"main":window.sessionStorage.getItem("visited"),
       shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList")),
       address_list:JSON.parse(window.localStorage.getItem("address"))==null?[]:JSON.parse(window.localStorage.getItem("address")),
    },
@@ -24,9 +24,9 @@ export default new Vuex.Store({
       selected:(state)=>{
          state.whichOne=localStorage.getItem("whichOne");
       },
-      update_visited:(state)=>{
-         state.visited=sessionStorage.getItem("visited");
-      },
+      // update_visited:(state)=>{
+      //    state.visited=sessionStorage.getItem("visited");
+      // },
       add_commodity:(state)=>{
          state.shoppingCar.push(JSON.parse(window.localStorage.getItem("subject")));
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))

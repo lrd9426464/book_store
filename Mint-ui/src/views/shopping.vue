@@ -44,7 +44,7 @@
       <div id="pay">
          <input size="40" type="checkbox" id="p1" @click="allSelect"><label for="p1">全选</label>
          <span>合计：¥{{allPrice}}</span>
-         <a href="javascript:;">去结算({{num}})</a>
+         <router-link to="/pay">提交订单({{num}})</router-link>
       </div>
       <my-footer></my-footer>
    </div>
@@ -164,8 +164,6 @@ export default {
       }
    },
    mounted(){
-      // this.commodity=JSON.parse(window.localStorage.getItem("commodityList"));
-      // console.log(this.commodity)
       if(this.$store.state.shoppingCar==null){
          this.num=0;
       }else{
