@@ -73,6 +73,9 @@ export default {
     logout() {
       this.$store.commit('no_login');
     }
+  },
+  mounted(){
+    window.sessionStorage.setItem("visited","me")
   }
 };
 </script>

@@ -28,6 +28,7 @@ export default {
       address: "",
       popupVisible: false,
       address_label: "",
+      frompath:window.sessionStorage.getItem("payfrom"),
       slots: [
         {
           className: "slot1",
@@ -35,6 +36,12 @@ export default {
         },
       ],
     };
+  },
+  beforeRouteEnter(to,from,next){
+    if(from.path=="/pay"){
+      window.sessionStorage.setItem("payfrom",from.path)
+    }
+    next();
   },
   methods: {
     choose_popup() {
@@ -48,7 +55,7 @@ export default {
       let add_address = {};
       let n=0;
       add_address.username = this.username;
-      console.log(this.username)
+      // console.log(this.username)
       add_address.phone = this.phone;
       add_address.address = this.address;
       add_address.address_label = this.address_label;
@@ -66,8 +73,13 @@ export default {
         }else{
             window.localStorage.setItem("add_address",JSON.stringify(add_address));
             this.$store.commit("add_address");
+        };
+        if(this.frompath=="/pay"){
+          console.log("1")
+          this.$router.push("/pay");
+        }else{
+          this.$router.push("/address");
         }
-        this.$router.push("/address");
       }
     }
   },

@@ -17,12 +17,12 @@
         <div id="address_edit">
             <router-link @click.native="del" :data-num="i" to>删除</router-link>
             <span>|</span>
-            <router-link @click.native="changeOne" :data-num="i" to>编辑</router-link>
+            <router-link @click.native="editOne" :data-num="i" to>编辑</router-link>
         </div>
       </div>
     </div>
 
-    <router-link @click.native="editOne" to>
+    <router-link @click.native="addOne" to>
       <mt-palette-button
         id="add_address"
         content="+"
@@ -37,14 +37,14 @@
 <script>
 export default {
    methods:{
-      changeOne(e){
+      editOne(e){
          let i=e.target.dataset.num;
          this.$store.state.address_list[i].num=i;
         //  console.log(this.$store.state.address_list[i]);
          window.sessionStorage.setItem("change",JSON.stringify(this.$store.state.address_list[i]))
          this.$router.push("/editAddress");
       },
-      editOne(){
+      addOne(){
          window.sessionStorage.clear();
          this.$router.push("/editAddress");
       },

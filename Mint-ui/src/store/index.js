@@ -11,6 +11,9 @@ export default new Vuex.Store({
       // visited:window.sessionStorage.getItem("visited")==null?"main":window.sessionStorage.getItem("visited"),
       shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList")),
       address_list:JSON.parse(window.localStorage.getItem("address"))==null?[]:JSON.parse(window.localStorage.getItem("address")),
+      pay_commodity:JSON.parse(window.localStorage.getItem("pay"))==null?[]:JSON.parse(window.localStorage.getItem("pay")),
+      success_commodity:JSON.parse(window.localStorage.getItem("pay_success"))==null?[]:JSON.parse(window.localStorage.getItem("pay_success")),
+      err_commodity:JSON.parse(window.localStorage.getItem("pay_err"))==null?[]:JSON.parse(window.localStorage.getItem("pay_err")),
    },
    //用来操作state中的数据
    mutations: {
@@ -34,6 +37,18 @@ export default new Vuex.Store({
       del_commodity:(state,n)=>{
          state.shoppingCar.splice(n,1);
          window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
+      },
+      pay_shopping:(state,noclear)=>{
+         state.shoppingCar=noclear;
+         window.localStorage.setItem("commodityList",JSON.stringify(state.shoppingCar))
+      },
+      pay(state,commodity){
+         state.pay_commodity=commodity;
+         window.localStorage.setItem("pay",JSON.stringify(state.pay_commodity))
+      },
+      clear_pay(state){
+         state.pay_commodity=[];
+         window.localStorage.setItem("pay",JSON.stringify(state.pay_commodity))
       },
       add_count:(state,n)=>{
          state.shoppingCar[n].count++;
@@ -63,6 +78,14 @@ export default new Vuex.Store({
       del_address:(state,n)=>{
          state.address_list.splice(n,1);
          window.localStorage.setItem("address",JSON.stringify(state.address_list))
+      },
+      success:(state,success)=>{
+         state.success_commodity.push(success);
+         window.localStorage.setItem("pay_success",JSON.stringify(state.success_commodity))
+      },
+      err:(state,err)=>{
+         state.err_commodity.push(err);
+         window.localStorage.setItem("pay_err",JSON.stringify(state.err_commodity))
       },
    },
    actions: {

@@ -1,7 +1,7 @@
 <template>
   <div class="success">
     <mt-header id="header" title="支付成功">
-      <mt-button @click.native="back" icon="back" slot="left"></mt-button>
+      <!-- <mt-button @click.native="back" icon="back" slot="left"></mt-button> -->
     </mt-header>
     <div id="paySuccess">
       <div>
@@ -15,16 +15,21 @@
          <router-link to @click.native="backMain">返回首页</router-link>
       </div>
     </div>
+     
   </div>
 </template>
 
 <script>
 export default {
+  data(){
+    return{
+      
+    }
+  },
   methods:{
-    back(){
-         window.history.back();
-         // this.$router.push("/shopping")
-    },
+    // back(){
+    //      window.history.back();
+    // },
     backMain(){
       window.sessionStorage.setItem("visited","main");
       this.$router.push("/");
@@ -62,7 +67,6 @@ export default {
 }
 .success #paySuccess div:last-child{
    margin: 0 10px;
-   text-align: center;
 }
 .success #paySuccess div a{
   display: block;
@@ -70,6 +74,7 @@ export default {
   padding: 15px 120px;
   box-sizing: border-box;
   border-radius: 3px;
+   text-align: center;
 }
 .success #paySuccess div a:first-child{
   color: white;
@@ -81,4 +86,5 @@ export default {
   border: 1px solid #ddd;
   margin-top: 10px;
 }
+
 </style>

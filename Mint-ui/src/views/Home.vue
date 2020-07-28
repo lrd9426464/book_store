@@ -105,6 +105,7 @@ export default {
     }
   },
   mounted(){
+    window.sessionStorage.setItem("visited","home")
     this.axios.get("/home").then(result=>{
       this.book_list=result.data;
     });

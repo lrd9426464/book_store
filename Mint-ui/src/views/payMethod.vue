@@ -12,7 +12,7 @@
         <div id="payMethod">
           <mt-cell class="cell" title="微信支付" label="微信安全支付">
              <img slot="icon" src="../assets/payMethod/wx.png">
-             <input type="radio" name="pay">
+             <input type="radio" name="pay" checked>
           </mt-cell>
           <mt-cell class="cell" title="支付宝支付" label="支付宝安全支付">
              <img slot="icon" src="../assets/payMethod/zhifubao.png">
@@ -23,7 +23,7 @@
              <input type="radio" name="pay">
           </mt-cell>
           <div>
-            <router-link to="paySuccess">立即支付</router-link>
+            <router-link to @click.native="pay_money">立即支付</router-link>
           </div>
         </div>
     </div>
@@ -35,6 +35,20 @@ export default {
    methods:{
       back(){
          window.history.back();
+      },
+      pay_money(){
+         // let inputs=document.querySelectorAll("input")
+         // inputs.forEach(item=>{
+         //    if(item.checked==true){
+         //       console.log("result");
+         //    }
+         // })
+         this.$store.state.pay_commodity.forEach(element => {
+            this.$store.commit("success",element)
+         });
+         // this.$store.commit("success",this.$store.state.pay_commodity);
+         this.$store.commit("clear_pay");
+         this.$router.push("/paySuccess")
       }
    }
 }

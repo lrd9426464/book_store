@@ -44,7 +44,7 @@
       <div id="pay">
          <input size="40" type="checkbox" id="p1" @click="allSelect"><label for="p1">全选</label>
          <span>合计：¥{{allPrice}}</span>
-         <router-link to="/pay">提交订单({{num}})</router-link>
+         <router-link to @click.native="submit">提交订单({{num}})</router-link>
       </div>
       <my-footer></my-footer>
    </div>
@@ -57,7 +57,6 @@ export default {
          sum:0,
          num:0,
          isNothing:false,
-         // commodity:[],
          // allPrice:0
       }
    },
@@ -142,6 +141,7 @@ export default {
          }
       },
       oneSelect(){
+         this.commodity=[];
          let input=document.querySelectorAll("#content input");
          let p1=document.getElementById("p1")
          let arr=[];
@@ -149,6 +149,8 @@ export default {
             if(elem.checked==true){
                // console.log(i)
                this.$store.commit("checked",i);
+               // console.log(this.$store.state.shoppingCar[i])
+               this.commodity.push(this.$store.state.shoppingCar[i]);
                arr.push(elem);
             }else{
                this.$store.commit("nochecked",i);
@@ -161,9 +163,34 @@ export default {
          }else{
             p1.checked=false;
          }
+      },
+      submit(){
+         let noclear=[];
+         let commodity=[];
+         let input=document.querySelectorAll("#content input");
+         input.forEach((elem,i)=>{
+            if(elem.checked==true){
+               console.log("1")
+               commodity.push(this.$store.state.shoppingCar[i])
+               console.log(commodity)
+            }else{
+               noclear.push(this.$store.state.shoppingCar[i]);
+            }
+         })
+         this.$store.commit("pay_shopping",noclear);
+         if(this.num!=0){
+            this.$store.commit("pay",commodity);
+            // console.log(this.$store.state.pay_commodity)
+            this.$router.push(`/pay`);
+         }
       }
    },
    mounted(){
+      let inputs=document.querySelectorAll("#content input");
+      inputs.forEach((elem,i)=>{
+         elem.checked=false;
+         this.$store.commit("nochecked",i);
+      })
       if(this.$store.state.shoppingCar==null){
          this.num=0;
       }else{

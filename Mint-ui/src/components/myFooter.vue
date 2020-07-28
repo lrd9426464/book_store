@@ -23,7 +23,7 @@
 export default {
    data(){
       return {
-         visited:window.sessionStorage.getItem("visited")
+         visited:window.sessionStorage.getItem("visited")==null?"main":window.sessionStorage.getItem("visited")
       }
    },
    methods:{
