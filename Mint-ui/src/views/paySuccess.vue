@@ -11,7 +11,7 @@
         <p>支付成功</p>
       </div>
       <div>
-         <router-link to="">查看订单</router-link>
+         <router-link to @click.native="order">查看订单</router-link>
          <router-link to @click.native="backMain">返回首页</router-link>
       </div>
     </div>
@@ -27,9 +27,9 @@ export default {
     }
   },
   methods:{
-    // back(){
-    //      window.history.back();
-    // },
+    order(){
+      this.$router.push("/payStatus");
+    },
     backMain(){
       window.sessionStorage.setItem("visited","main");
       this.$router.push("/");

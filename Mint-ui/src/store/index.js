@@ -87,6 +87,10 @@ export default new Vuex.Store({
          state.err_commodity.push(err);
          window.localStorage.setItem("pay_err",JSON.stringify(state.err_commodity))
       },
+      del_err:(state,m)=>{
+         state.err_commodity.splice(m);
+         window.localStorage.setItem("pay_err",JSON.stringify(state.err_commodity))
+      }
    },
    actions: {
 

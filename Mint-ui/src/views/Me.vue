@@ -19,7 +19,7 @@
     </div>
     <ul>
       <li>
-        <router-link to>
+        <router-link to="/payStatus">
           <img src="../assets/me/fukuan.png" alt />
           <p>待付款</p>
         </router-link>

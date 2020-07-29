@@ -74,7 +74,7 @@
             购物车
          </mt-tab-item>
          <router-link to="" @click.native="shopping">加入购物车</router-link>
-         <router-link to="">立即购买</router-link>
+         <router-link to @click.native="goPay">立即购买</router-link>
       </mt-tabbar>
    </div>
 </template>
@@ -131,6 +131,19 @@ export default {
          // this.$store.commit("update_visited");
          // this.$router.push(`/shopping`);
       },
+      goPay(){
+         let shoppingItem={};
+         let arr=[];
+         shoppingItem.title=this.title;
+         shoppingItem.price=this.price;
+         shoppingItem.did=this.did;
+         shoppingItem.count=1;
+         shoppingItem.total=this.price;
+         shoppingItem.selected=0;
+         arr.push(shoppingItem);
+         this.$store.commit("pay",arr);
+         this.$router.push(`/pay`);
+      }
       
    },
    mounted(){

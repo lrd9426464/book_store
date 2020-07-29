@@ -58,7 +58,7 @@
       <mt-tab-item>
         <p id="total">总计：<span>90</span></p>
       </mt-tab-item>
-      <router-link to="/payMethod" id="sure">确认提交</router-link>
+      <router-link @click.native="toPay" to="" id="sure">确认提交</router-link>
     </mt-tabbar>
   </div>
 </template>
@@ -94,6 +94,11 @@ export default {
     },
     toaddress(){
        this.$router.push("/editAddress")
+    },
+    toPay(){
+      if(this.address.length!=0){
+        this.$router.push("/payMethod")
+      }
     }
   },
   mounted(){
