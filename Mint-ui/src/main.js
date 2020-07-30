@@ -16,7 +16,20 @@ axios.defaults.baseURL="http://127.0.0.1:3000/";
 Vue.prototype.axios=axios;
 Vue.config.productionTip = false
 
-
+router.beforeEach((to, from, next) => {
+  let arr=["/pay","/payMethod","/payStatus","/paySuccess","shopping"]
+  let result=arr.some(item=>{
+    return item==to.path;
+  })
+  // console.log(document.cookie.split(";")[0].split("=")[1])
+  if (result==true && document.cookie.split(";")[0].split("=")[1]==1) {
+    next({
+      path:"/login"
+    })
+  }else{
+    next()
+  }
+})
 
 new Vue({
   router,

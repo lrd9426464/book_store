@@ -88,10 +88,12 @@ export default {
       if (this.uname_state == "success" && this.upwd_state == "success") {
         this.axios.get(`/tologin?uname=${this.uname_msg}&upwd=${this.upwd_msg}`).then(result=>{
           if(result.data.code==1){
+            document.cookie="key=1";
             sessionStorage.setItem("login_state", true);
             this.$store.commit("is_login");
             this.$router.push("/me")
           }else{
+            document.cookie="key=0";
             this.$toast({
               message: '您的用户名或密码输入错误',
               duration: 800

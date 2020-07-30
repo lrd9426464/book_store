@@ -101,50 +101,59 @@ export default {
          this.$router.push(`/shopping`);
       },
       shopping(){
-         let shoppingItem={};
-         shoppingItem.title=this.title;
-         shoppingItem.price=this.price;
-         shoppingItem.did=this.did;
-         shoppingItem.count=1;
-         shoppingItem.total=this.price;
-         shoppingItem.selected=0;
-         if(JSON.parse(window.localStorage.getItem("commodityList"))==null || JSON.parse(window.localStorage.getItem("commodityList")).length==0){
-            window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
-            this.$store.commit("add_commodity");
-         }else{
-            let sub=JSON.parse(window.localStorage.getItem("commodityList"));
-            let result=sub.every((elem,i,arr)=>{
-               // console.log(elem.did)
-               return elem.did!==this.did
-            })
-            // console.log(result)
-            if(result==false){
-               this.$toast('您的购物车里已有该商品');
-               return ;
-            }else{
+         if(this.$store.state.islogin==true){
+            let shoppingItem={};
+            shoppingItem.title=this.title;
+            shoppingItem.price=this.price;
+            shoppingItem.did=this.did;
+            shoppingItem.count=1;
+            shoppingItem.total=this.price;
+            shoppingItem.selected=0;
+            if(JSON.parse(window.localStorage.getItem("commodityList"))==null || JSON.parse(window.localStorage.getItem("commodityList")).length==0){
                window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
                this.$store.commit("add_commodity");
+            }else{
+               let sub=JSON.parse(window.localStorage.getItem("commodityList"));
+               let result=sub.every((elem,i,arr)=>{
+                  // console.log(elem.did)
+                  return elem.did!==this.did
+               })
+               // console.log(result)
+               if(result==false){
+                  this.$toast('您的购物车里已有该商品');
+                  return ;
+               }else{
+                  window.localStorage.setItem("subject",JSON.stringify(shoppingItem));
+                  this.$store.commit("add_commodity");
+               }
             }
+         }else{
+            this.$toast({
+               message:"请先登录",
+               duration:800
+            })
          }
-         // console.log(JSON.parse(window.localStorage.getItem("subject")))
-         // window.localStorage.setItem("visited","shopping");
-         // this.$store.commit("update_visited");
-         // this.$router.push(`/shopping`);
       },
       goPay(){
-         let shoppingItem={};
-         let arr=[];
-         shoppingItem.title=this.title;
-         shoppingItem.price=this.price;
-         shoppingItem.did=this.did;
-         shoppingItem.count=1;
-         shoppingItem.total=this.price;
-         shoppingItem.selected=0;
-         arr.push(shoppingItem);
-         this.$store.commit("pay",arr);
-         this.$router.push(`/pay`);
+         if(this.$store.state.islogin==true){
+            let shoppingItem={};
+            let arr=[];
+            shoppingItem.title=this.title;
+            shoppingItem.price=this.price;
+            shoppingItem.did=this.did;
+            shoppingItem.count=1;
+            shoppingItem.total=this.price;
+            shoppingItem.selected=0;
+            arr.push(shoppingItem);
+            this.$store.commit("pay",arr);
+            this.$router.push(`/pay`);
+         }else{
+            this.$toast({
+               message:"请先登录",
+               duration:800
+            })
+         }
       }
-      
    },
    mounted(){
       // console.log(this.image)
