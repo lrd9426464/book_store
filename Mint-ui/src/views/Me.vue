@@ -15,7 +15,7 @@
       <a href="javascript:;" v-else @click="logout">注销</a>
     </div>
     <div id="order">
-      <mt-cell title="全部订单" is-link value="查看所有订单"></mt-cell>
+      <mt-cell title="全部订单" is-link to="/payStatus" value="查看所有订单"></mt-cell>
     </div>
     <ul>
       <li>
@@ -34,6 +34,12 @@
         <router-link to>
           <img src="../assets/me/shouhuo.png" alt />
           <p>已发货</p>
+        </router-link>
+      </li>
+      <li>
+        <router-link to>
+          <img src="../assets/me/yishouhuo.png" alt />
+          <p>已收货</p>
         </router-link>
       </li>
       <li>

@@ -17,8 +17,8 @@
                      <span v-else style="background-color:red">未付款</span>
                   </div>
                   <div>
-                     <p>下单时间：2020-7-29</p>
-                     <p>订单编号：11111111111</p>
+                     <p>下单时间：{{item.date}}</p>
+                     <p>订单编号：{{item.orderId}}</p>
                      <div id="order_msg">
                         <div>
                            <img src="../assets/home/book.jpg" alt="">
@@ -45,8 +45,8 @@
                      <span>已付款</span>
                   </div>
                   <div>
-                     <p>下单时间：2020-7-29</p>
-                     <p>订单编号：11111111111</p>
+                     <p>下单时间：{{item.date}}</p>
+                     <p>订单编号：{{item.orderId}}</p>
                      <div id="order_msg">
                         <div>
                            <img src="../assets/home/book.jpg" alt="">
@@ -72,8 +72,8 @@
                      <span style="background-color:red">未付款</span>
                   </div>
                   <div>
-                     <p>下单时间：2020-7-29</p>
-                     <p>订单编号：11111111111</p>
+                     <p>下单时间：{{item.date}}</p>
+                     <p>订单编号：{{item.orderId}}</p>
                      <div id="order_msg">
                         <div>
                            <img src="../assets/home/book.jpg" alt="">
@@ -103,23 +103,36 @@ export default {
       return {
          visited:"allPay",
          allPay:[],
-         m:0
+         m:0,
+         date:new Date().toLocaleString()
       }
    },
    methods:{
       backHome(){
-         this.$router.push("/me")
+         this.$router.push("/me");
       },
       pay(e){
          let arr=[];
          if(e.target.dataset.num>=this.$store.state.success_commodity.length){
             this.m=e.target.dataset.num-this.$store.state.success_commodity.length;
+         }else{
+            this.m=e.target.dataset.num;
          }
-         this.m=e.target.dataset.num;
          arr.push(this.$store.state.err_commodity[this.m]);
-         this.$store.commit("pay",arr);
-         this.$router.push(`/pay`);
+         this.addPay(arr).then(this.delPay);
          // console.log(this.$store.state.err_commodity[n])
+      },
+      addPay(arr){
+         return new Promise(
+            (door)=>{
+               this.$store.commit("pay",arr);
+               door();
+            }
+         )
+      },
+      delPay(){
+         this.$store.commit("del_err",this.m);
+         this.$router.push(`/pay`);
       }
    },
    mounted(){
@@ -159,12 +172,10 @@ export default {
 }
 .status .content-item #order_msg>div:first-child{
    flex: 1;
-}
-.status .content-item #order_msg>div:first-child{
-   flex: 1;
    margin-right: 20px;
 }
 .status .content-item #order_msg>div:last-child{
+   margin-top: 20px;
    flex: 4;
 }
 .status .content-item #order_msg img{

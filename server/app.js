@@ -39,6 +39,43 @@ server.use(cors({
    origin:['http://localhost:8080','http://127.0.0.1:8080']
 }));
 
+
+server.get("/tologin",(req,res)=>{
+   let uname=req.query.uname;
+   let upwd=req.query.upwd;
+   let sql="select uid from book_user where uname=? and upwd=?";
+   pool.query(sql,[uname,upwd],(err,result)=>{
+      if(err) throw err;
+      if(result.length!=0){
+         res.send({result:result,code:1});
+      }else{
+         res.send({code:0});
+      }
+   })
+})
+
+server.get("/toregister",(req,res)=>{
+   let obj=req.query;
+   let sql="insert into book_user set?";
+   pool.query(sql,[obj],(err,result)=>{
+      if(err) throw err;
+      if(result.length!=0){
+         res.send({result:result,code:1});
+      }else{
+         res.send({code:0});
+      }
+   })
+})
+
+server.get("/verification",(req,res)=>{
+   let uname=req.query.uname;
+   pool.query("select uid from book_user where uname=?",[uname],(err,result)=>{
+       if(err) throw err;
+      //  console.log(result)
+       res.send(result[0]);
+   });
+});
+
 server.get("/home",(req,res)=>{
    let sql="select lid,object,anothername from book_list";
    pool.query(sql,(err,result)=>{
@@ -74,3 +111,4 @@ server.get("/detail",(req,res)=>{
       res.send(result);
    })
 })
+

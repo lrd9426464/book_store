@@ -37,6 +37,9 @@
       </mt-field>
       <mt-button id="button" size="large" type="primary" @click="login">登录</mt-button>
     </div>
+    <div id="account">
+      <router-link to="/register">还没有账号？快注册一个吧！</router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -83,9 +86,19 @@ export default {
     },
     login() {
       if (this.uname_state == "success" && this.upwd_state == "success") {
-        sessionStorage.setItem("login_state", true);
-        this.$store.commit("is_login");
-        this.$router.push("/me")
+        this.axios.get(`/tologin?uname=${this.uname_msg}&upwd=${this.upwd_msg}`).then(result=>{
+          if(result.data.code==1){
+            sessionStorage.setItem("login_state", true);
+            this.$store.commit("is_login");
+            this.$router.push("/me")
+          }else{
+            this.$toast({
+              message: '您的用户名或密码输入错误',
+              duration: 800
+            });
+          }
+        })
+        
       } else {
         this.$messagebox("请仔细检查您的信息是否填写正确");
         return;
@@ -97,9 +110,14 @@ export default {
 };
 </script>
 <style scoped>
-/* #image_top{
-   width: 100%;
-} */
+.log #account{
+  margin-top: 30px;
+  text-align: center;
+}
+.log #account>a{
+  color: red;
+  text-decoration: none;
+}
 .log #back {
   height: 40px;
 }

@@ -44,6 +44,12 @@ export default {
          //    }
          // })
          this.$store.state.pay_commodity.forEach(element => {
+            let id="";
+            element.date=new Date().toLocaleString();
+            for (let index = 0; index < 15; index++) {
+               id += Math.floor(Math.random()*10);
+            }
+            element.orderId=id;
             this.$store.commit("success",element)
          });
          // this.$store.commit("success",this.$store.state.pay_commodity);

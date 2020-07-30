@@ -13,6 +13,7 @@
         label="账号"
         placeholder="请输入账号"
         @input="uname"
+        @blur.native.capture="leave"
         v-model="uname_msg"
         :state="uname_state"
         disableClear
@@ -136,13 +137,34 @@ export default {
         })
         setTimeout(() => {
           this.$indicator.close();
-          this.$router.push("/login");
+          this.axios.get(`/toregister?uname=${this.uname_msg}&upwd=${this.upwd_msg}`).then(result=>{
+            if(result.data.code==1){
+              this.$router.push("/login");
+            }
+          })
         }, 800);
       }else{
-        this.$messagebox("请仔细检查您的信息是否填写正确");
+        if(this.uname_state == "warning"){
+          this.$messagebox("用户名已存在");
+        }else{
+          this.$messagebox("请仔细检查您的信息是否填写正确");
+        }
         return ;
       }
-    }
+    },
+    leave(){
+      console.log("1");
+      this.axios.get('/verification',{
+        params:{
+          uname:this.uname_msg
+        }
+      })
+      .then((result)=>{
+        if(result.data!==""){
+          this.uname_state="warning";
+        }
+      });
+    },
   }
 };
 </script>

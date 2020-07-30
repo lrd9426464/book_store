@@ -78,10 +78,17 @@ export default {
          if (action == 'confirm') {     //确认的回调
             // console.log(1); 
             this.$store.state.pay_commodity.forEach(element => {
-               this.$store.commit("err",element)
+              let id="";
+              element.date=new Date().toLocaleString();
+              for (let index = 0; index < 15; index++) {
+                id += Math.floor(Math.random()*10);
+              }
+              element.orderId=id;
+              // console.log(element)
+              this.$store.commit("err",element);
             });
             this.$store.commit("clear_pay");
-            this.$router.push("/payStatus")
+            this.$router.push("/payStatus");
          }
       }).catch(err => {})
     },
@@ -98,6 +105,11 @@ export default {
     toPay(){
       if(this.address.length!=0){
         this.$router.push("/payMethod")
+      }else{
+        this.$toast({
+          message:"请先添加一个地址",
+          duration:800
+        })
       }
     }
   },
