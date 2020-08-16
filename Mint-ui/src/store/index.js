@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
    //存储应用程序中共享的数据
    state: {
-      islogin:sessionStorage.getItem("login_state")?sessionStorage.getItem("login_state"):false,
+      islogin:sessionStorage.getItem("login_state")==null?false:sessionStorage.getItem("login_state"),
       whichOne:1,
       // visited:window.sessionStorage.getItem("visited")==null?"main":window.sessionStorage.getItem("visited"),
       shoppingCar:JSON.parse(window.localStorage.getItem("commodityList"))==null?[]:JSON.parse(window.localStorage.getItem("commodityList")),
@@ -22,7 +22,7 @@ export default new Vuex.Store({
       },
       no_login:(state)=>{
          state.islogin=false;
-         localStorage.clear();
+         sessionStorage.clear("login_state");
       },
       selected:(state)=>{
          state.whichOne=localStorage.getItem("whichOne");

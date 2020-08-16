@@ -101,7 +101,7 @@ export default {
          this.$router.push(`/shopping`);
       },
       shopping(){
-         if(this.$store.state.islogin==true){
+         if(this.$store.state.islogin=="true"){
             let shoppingItem={};
             shoppingItem.title=this.title;
             shoppingItem.price=this.price;

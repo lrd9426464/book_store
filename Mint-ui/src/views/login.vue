@@ -1,7 +1,7 @@
 <template>
   <div class="log">
     <mt-header id="head" title="登录界面">
-      <router-link to="/" slot="left">
+      <router-link to @click.native="back" slot="left">
         <mt-button id="back" icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -55,6 +55,10 @@ export default {
     };
   },
   methods: {
+    back(){
+		window.sessionStorage.setItem("visited","me")
+		this.$router.push("/me");
+	},
     uname() {
       let reg = /^[a-zA-Z0-9]{4,8}$/;
       let bool = reg.test(this.uname_msg.trim());
@@ -108,6 +112,7 @@ export default {
     }
   },
   mounted(){
+	  
   }
 };
 </script>

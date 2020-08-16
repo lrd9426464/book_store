@@ -7,10 +7,10 @@
       <router-link to v-show="haveAddress">
         <div id="address" @click="selectAddress">
           <p>
-            <span>{{address.username}}</span>
-            <span>{{address.phone}}</span>
+            <span>{{address[0].username}}</span>
+            <span>{{address[0].phone}}</span>
           </p>
-          <p>{{address.address}}</p>
+          <p>{{address[0].address}}</p>
         </div>
       </router-link>
       <div id="noaddress" v-show="!haveAddress">
@@ -31,32 +31,32 @@
     </div>
     <div id="preferential">
       <mt-cell title="积分">
-        <span>1000</span>
+        <span>{{integral}}</span>
       </mt-cell>
       <mt-cell title="积分抵扣">
-        <span class="pri">¥-10</span>
+        <span class="pri">¥{{discount}}</span>
       </mt-cell>
       <mt-cell title="运费">
         <span>免运费</span>
       </mt-cell>
       <mt-cell title="商品金额">
-        <span class="pri">¥100</span>
+        <span class="pri">¥{{money}}</span>
       </mt-cell>
     </div>
-    <mt-popup v-model="popupVisible" position="right">
-      <div @click="changeAddress">
-        <div class="address">
+    <mt-popup id="popup" v-model="popupVisible" position="right">
+      <div id="changeAddress" @click="changeAddress">
+        <div class="address" v-for="(elem,i) in this.$store.state.address_list" :key="i">
           <p>
-            <span>张三</span>
-            <span>13648975462</span>
+            <span>{{elem.username}}</span>
+            <span>{{elem.phone}}</span>
           </p>
-          <p>77888888888888888888888888888888888888888888888</p>
+          <p>{{elem.address}}</p>
         </div>
       </div>
     </mt-popup>
     <mt-tabbar id="footer" fixed>
       <mt-tab-item>
-        <p id="total">总计：<span>90</span></p>
+        <p id="total">总计：<span>{{money+discount}}</span></p>
       </mt-tab-item>
       <router-link @click.native="toPay" to="" id="sure">确认提交</router-link>
     </mt-tabbar>
@@ -69,7 +69,10 @@ export default {
     return {
       popupVisible: false,
       haveAddress:true,
-      address:[]
+      address:[],
+	  money:0,
+	  discount:0,
+	  integral:1000
     };
   },
   methods: {
@@ -93,11 +96,10 @@ export default {
       }).catch(err => {})
     },
     selectAddress(){
-      this.popupVisible = false;
+      this.popupVisible = true;
     },
-    changeAddress() {
+    changeAddress(e) {
       this.popupVisible = false;
-      console.log("1");
     },
     toaddress(){
        this.$router.push("/editAddress")
@@ -114,11 +116,16 @@ export default {
     }
   },
   mounted(){
-     if(this.$store.state.address_list.length!==0){
-        this.address=this.$store.state.address_list[0];
-     }else{
+	  this.discount=this.integral/100*-1
+      if(this.$store.state.address_list.length!==0){
+        this.address=this.$store.state.address_list;
+      }else{
         this.haveAddress=false;
-     }
+      }
+	  for (let item of this.$store.state.pay_commodity) {
+	 	// console.log(item)
+		this.money=item.price*item.count
+	  }
   }
 };
 </script>
@@ -200,7 +207,11 @@ export default {
 .pay #preferential .pri {
   color: #e65339;
 }
+.pay #popup{
+	width: 100% !important;
+}
 .pay .address {
+	width:100%;
   padding: 20px;
   word-break: break-all;
   white-space: pre-wrap;

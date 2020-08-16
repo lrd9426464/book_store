@@ -20,23 +20,23 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/payStatus',
-    component: payStatus,
+    component: () => import(/* webpackChunkName: "payStatus" */ '../views/payStatus.vue'),
   },
   {
     path: '/paySuccess',
-    component: paySuccess,
+    component: () => import(/* webpackChunkName: "paySuccess" */ '../views/paySuccess.vue'),
   },
   {
     path: '/payMethod',
-    component: payMethod,
+    component: () => import(/* webpackChunkName: "payMethod" */ '../views/payMethod.vue'),
   },
   {
     path: '/pay',
-    component: pay,
+    component: () => import(/* webpackChunkName: "pay" */ '../views/pay.vue'),
   },
   {
     path: '/editAddress',
-    component: edit,
+    component: () => import(/* webpackChunkName: "details" */ '../views/edit_address.vue'),
   },
   {
     path: '/address',
@@ -44,16 +44,16 @@ const routes = [
   },
   {
     path: '/details/:did&:title&:price',
-    component: details,
-    props:true
+    props:true,
+	component: () => import(/* webpackChunkName: "details" */ '../views/details.vue')
   },
   {
     path: '/me',
-    component: Me
+	component: () => import(/* webpackChunkName: "Me" */ '../views/Me.vue')
   },
   {
     path: '/shopping',
-    component: shopping
+	component: () => import(/* webpackChunkName: "shopping" */ '../views/shopping.vue')
   },
   // {
   //   path: '/update',
@@ -61,11 +61,11 @@ const routes = [
   // },
   {
     path: '/login',
-    component: login
+	component: () => import(/* webpackChunkName: "login" */ '../views/login.vue')
   },
   {
     path: '/register',
-    component: register
+	component: () => import(/* webpackChunkName: "register" */ '../views/register.vue')
   },
   {
     path: '/',

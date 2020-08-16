@@ -17,12 +17,13 @@ Vue.prototype.axios=axios;
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  let arr=["/pay","/payMethod","/payStatus","/paySuccess","shopping"]
+  let arr=["/pay","/payMethod","/payStatus","/paySuccess","/shopping"]
   let result=arr.some(item=>{
     return item==to.path;
   })
-  // console.log(document.cookie.split(";")[0].split("=")[1])
-  if (result==true && document.cookie.split(";")[0].split("=")[1]==1) {
+  console.log(document.cookie.split(";")[0].split("=")[1])
+  if (result==true && (window.sessionStorage.getItem("login_state")==false || window.sessionStorage.getItem("login_state")==null)) {
+	  console.log("meidenglu")
     next({
       path:"/login"
     })

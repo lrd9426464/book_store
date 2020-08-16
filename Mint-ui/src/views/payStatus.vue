@@ -32,7 +32,7 @@
                         <div>
                            <span>已支付</span>
                         </div>
-                        <div>订单总价：<span id="price">¥{{item.price}}</span></div>
+                        <div>订单总价：<span id="price">¥{{item.price*item.count}}</span></div>
                      </div>
                   </div>
                </div>
@@ -59,7 +59,7 @@
                         <div>
                            <span>已支付</span>
                         </div>
-                        <div>订单总价：<span id="price">¥{{item.price}}</span></div>
+                        <div>订单总价：<span id="price">¥{{item.price*item.count}}</span></div>
                      </div>
                   </div>
                </div>
@@ -87,7 +87,7 @@
                         <div>
                            <span>已支付</span>
                         </div>
-                        <div>订单总价：<span id="price">¥{{item.price}}</span></div>
+                        <div>订单总价：<span id="price">¥{{item.price*item.count}}</span></div>
                      </div>
                   </div>
                </div>
@@ -109,6 +109,7 @@ export default {
    },
    methods:{
       backHome(){
+		 window.sessionStorage.setItem("visited","me")
          this.$router.push("/me");
       },
       pay(e){
@@ -143,6 +144,9 @@ export default {
 </script>
 
 <style scoped>
+.status{
+	padding-bottom: 10px;
+}
 .status #content{
    margin-top: 10px;
 }
